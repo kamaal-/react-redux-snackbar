@@ -1,6 +1,6 @@
 {
   "name": "react-redux-snackbar",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "A snackbar (displays toasts) for reactjs, using the redux state container",
   "main": "./dist/index.js",
   "module": "./src/index.js",
