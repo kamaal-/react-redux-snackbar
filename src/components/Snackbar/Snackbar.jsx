@@ -5,7 +5,7 @@ import getComputedStyles from './styles'
 
 class Snackbar extends React.Component {
 
-	constructor(props){
+	constructor(props) {
 		super(props)
 		this.state = {
             snack: null,
@@ -40,7 +40,7 @@ class Snackbar extends React.Component {
 		this.clearDismissTimer();
 	}
 
-	showSnack(snack){
+	showSnack(snack) {
 		this.hideSnack().then(() => {
 			this.setState({ snack, visible: false });
 			setTimeout(() => {
@@ -52,9 +52,9 @@ class Snackbar extends React.Component {
 				}
 			}, 1);
 		});
-	};
+	}
 
-	hideSnack(){
+	hideSnack() {
 		if (!this.state.snack) {
 			return Promise.resolve();
 		}
@@ -66,21 +66,21 @@ class Snackbar extends React.Component {
 				resolve();
 			};
 		});
-	};
+	}
 
-	clearDismissTimer(){
+	clearDismissTimer() {
 		if (this.snackTimer) {
 			clearTimeout(this.snackTimer);
 			this.snackTimer = null;
 		}
-	};
+	}
 
 	transitionEndHandler(){
 		if (this.afterTransition) {
 			this.afterTransition();
 			this.afterTransition = null;
 		}
-	};
+	}
 
 	buttonClickHandler(){
 		const { onButtonClick } = this.props;
@@ -96,13 +96,13 @@ class Snackbar extends React.Component {
 		}
 
 		this.props.dispatch(dismissSnack(id));
-	};
+	}
 
 	populateStyles(elem){
 		const { theming, customStyles } = this.props;
 		const largeScreen = window.matchMedia('(min-width: 720px)').matches;
 		return getComputedStyles(elem, largeScreen, this.state.visible, theming, customStyles);
-	};
+	}
 
 	render(){
 		const { snack } = this.state;
@@ -110,8 +110,7 @@ class Snackbar extends React.Component {
 			return null;
 		}
 		const button = (snack.data.button || {}).label ? snack.data.button : null;
-		return (<div
-				style={this.populateStyles('snack')}
+		return (<div style={this.populateStyles('snack')}
 				onTransitionEnd={this.transitionEndHandler}>
 				<span style={this.populateStyles('label')}>{snack.data.label}</span>
 				{button && (
