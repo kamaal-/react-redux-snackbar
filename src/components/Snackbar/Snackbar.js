@@ -1,14 +1,17 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { dismissSnack } from '../../state/snackbarActions';
-import getComputedStyles from './styles';
+import React from 'react'
+import { connect } from 'react-redux'
+import { dismissSnack } from '../../state/snackbarActions'
+import getComputedStyles from './styles'
 
 class Snackbar extends React.Component {
 
-	state = {
-		snack: null,
-		visible: false,
-	};
+	constructor(props){
+		super(props)
+		this.state = {
+            snack: null,
+            visible: false,
+        }
+	}
 
 	componentDidMount() {
 		if (this.props.snack) {
@@ -37,7 +40,7 @@ class Snackbar extends React.Component {
 		this.clearDismissTimer();
 	}
 
-	showSnack = (snack) => {
+	showSnack(snack){
 		this.hideSnack().then(() => {
 			this.setState({ snack, visible: false });
 			setTimeout(() => {
@@ -51,7 +54,7 @@ class Snackbar extends React.Component {
 		});
 	};
 
-	hideSnack = () => {
+	hideSnack(){
 		if (!this.state.snack) {
 			return Promise.resolve();
 		}
@@ -65,21 +68,21 @@ class Snackbar extends React.Component {
 		});
 	};
 
-	clearDismissTimer = () => {
+	clearDismissTimer(){
 		if (this.snackTimer) {
 			clearTimeout(this.snackTimer);
 			this.snackTimer = null;
 		}
 	};
 
-	transitionEndHandler = () => {
+	transitionEndHandler(){
 		if (this.afterTransition) {
 			this.afterTransition();
 			this.afterTransition = null;
 		}
 	};
 
-	buttonClickHandler = () => {
+	buttonClickHandler(){
 		const { onButtonClick } = this.props;
 		const { snack } = this.state;
 		const { id, data: { button = {} } } = snack;
@@ -95,13 +98,13 @@ class Snackbar extends React.Component {
 		this.props.dispatch(dismissSnack(id));
 	};
 
-	populateStyles = (elem) => {
+	populateStyles(elem){
 		const { theming, customStyles } = this.props;
 		const largeScreen = window.matchMedia('(min-width: 720px)').matches;
 		return getComputedStyles(elem, largeScreen, this.state.visible, theming, customStyles);
 	};
 
-	render() {
+	render(){
 		const { snack } = this.state;
 		if (!snack) {
 			return null;
