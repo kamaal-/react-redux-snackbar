@@ -110,11 +110,9 @@ class Snackbar extends React.Component {
 			return null;
 		}
 		const button = (snack.data.button || {}).label ? snack.data.button : null;
-		return (
-			<div
+		return (<div
 				style={this.populateStyles('snack')}
-				onTransitionEnd={this.transitionEndHandler}
-			>
+				onTransitionEnd={this.transitionEndHandler}>
 				<span style={this.populateStyles('label')}>{snack.data.label}</span>
 				{button && (
 					<button
